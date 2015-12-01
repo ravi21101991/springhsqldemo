@@ -88,7 +88,7 @@ public class UserWrapper {
         userEntity.setId(this.id);
         userEntity.setLastName(this.lastName);
         userEntity.setPhone(this.phone);
-        userEntity.setZip(this.zip);
+        userEntity.setZip(StringUtils.isEmpty(this.zip) ? "" : this.zip);
         return userEntity;
     }
 
@@ -100,7 +100,7 @@ public class UserWrapper {
         userEntity.setLastName(this.lastName);
         userEntity.setMiddleName(StringUtils.isEmpty(this.middleName) ? "" : this.middleName);
         userEntity.setPhone(this.phone);
-        userEntity.setZip(this.zip);
+        userEntity.setZip(StringUtils.isEmpty(this.zip) ? "" : this.zip);
         return userEntity;
     }
 
@@ -112,6 +112,6 @@ public class UserWrapper {
         this.lastName = userEntity.getLastName();
         this.middleName = StringUtils.isEmpty(userEntity.getMiddleName()) ? "" : userEntity.getMiddleName(); 
         this.phone = userEntity.getPhone();
-        this.zip = userEntity.getZip();
+        this.zip = StringUtils.isEmpty(userEntity.getZip()) ? "" : userEntity.getZip();
     }
 }

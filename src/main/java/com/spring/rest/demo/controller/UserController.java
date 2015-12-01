@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.spring.rest.demo.enums.ErrorMapping;
+import com.spring.rest.demo.exception.UserException;
 import com.spring.rest.demo.service.UserService;
 import com.spring.rest.demo.validator.UserValidator;
 import com.spring.rest.demo.wrapper.SuccessWrapper;
@@ -26,7 +28,12 @@ public class UserController {
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     public @ResponseBody List<UserWrapper> getAllUsers() {
-        return userService.getAllUsers();
+        List<UserWrapper> userWrapperList = userService.getAllUsers();
+
+        if (userWrapperList == null || userWrapperList.isEmpty()) {
+            throw new UserException(ErrorMapping.USERS_NOT_FOUND);
+        }
+        return userWrapperList;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
