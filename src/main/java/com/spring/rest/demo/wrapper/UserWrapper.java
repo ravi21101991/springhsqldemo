@@ -80,6 +80,16 @@ public class UserWrapper {
 		return userEntity;
 	}
 
+	public UserEntity unwrapForUpdate(UserEntity userEntity) {
+		userEntity.setAge(this.age);
+		userEntity.setFirstName(this.firstName);
+		userEntity.setGender(this.gender);
+		userEntity.setId(this.id);
+		userEntity.setLastName(this.lastName);
+		userEntity.setPhone(this.phone);
+		userEntity.setZip(this.zip);
+		return userEntity;
+	}
 	public void wrap(UserEntity userEntity) {
 		this.age = userEntity.getAge();
 		this.firstName = userEntity.getFirstName();

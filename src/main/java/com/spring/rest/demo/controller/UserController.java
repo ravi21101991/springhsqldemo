@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.OK)
     public void updateUser(@RequestBody UserWrapper userDetails) {
         UserValidator.validateUserDetails(userDetails);
         userService.updateUser(userDetails);

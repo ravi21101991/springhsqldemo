@@ -1,9 +1,15 @@
-package com.spring.rest.demo.wrapper;
+package com.spring.rest.demo.enums;
 
-public class UserExceptionWrapper {
-	
+public enum ErrorMapping {
+
+	USER_NOT_FOUND("USR404","The requested user was not found.");
 	private String errorCode;
 	private String errorMessage;
+
+	private ErrorMapping(String errorCode, String errorMessage) {
+		this.setErrorCode(errorCode);
+		this.setErrorMessage(errorMessage);
+	}
 
 	public String getErrorCode() {
 		return errorCode;

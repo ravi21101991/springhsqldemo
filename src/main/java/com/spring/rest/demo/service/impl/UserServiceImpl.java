@@ -2,48 +2,58 @@ package com.spring.rest.demo.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.rest.demo.dao.UserDao;
+import com.spring.rest.demo.enums.ErrorMapping;
+import com.spring.rest.demo.exception.UserException;
 import com.spring.rest.demo.model.UserEntity;
 import com.spring.rest.demo.service.UserService;
 import com.spring.rest.demo.wrapper.UserWrapper;
 
 @Service("userService")
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    @Autowired private UserDao userDao;
-    
-    public List<UserWrapper> getAllUsers() {
-       List<UserEntity> users = userDao.getAllUsers();
-       List<UserWrapper> userWrappers = new ArrayList<UserWrapper>();
-       
-       UserWrapper userWrapper = null;
-               
-       for (UserEntity userEntity : users) {
-        userWrapper = new UserWrapper();
-        userWrapper.setAge(userEntity.getAge());
-        userWrapper.setFirstName(userEntity.getFirstName());
-        userWrapper.setGender(userEntity.getGender());
-        userWrapper.setId(userEntity.getId());
-        userWrapper.setLastName(userEntity.getLastName());
-        userWrapper.setPhone(userEntity.getPhone());
-        userWrapper.setZip(userEntity.getZip());
-        userWrappers.add(userWrapper);
-    }
-        return userWrappers;
-    }
+	@Autowired
+	private UserDao userDao;
 
-    public void createUser(UserWrapper userDetails) {
-        // TODO Auto-generated method stub
+	public List<UserWrapper> getAllUsers() {
+		List<UserEntity> userEntityList = userDao.getAllUsers();
+		List<UserWrapper> userWrapperList = new ArrayList<UserWrapper>();
+		UserWrapper userWrapper = null;
 
-    }
+		for (UserEntity userEntity : userEntityList) {
+			userWrapper = new UserWrapper();
+			userWrapper.wrap(userEntity);
+			userWrapperList.add(userWrapper);
+		}
+		return userWrapperList;
+	}
 
-    public void updateUser(UserWrapper userDetails) {
-        // TODO Auto-generated method stub
+	@Transactional(readOnly = false)
+	public void createUser(UserWrapper userWrapper) {
+		UserEntity userEntity = userWrapper.unwrap();
+		userEntity.setId(generateUUID());
+		userDao.createUser(userEntity);
+	}
 
-    }
+	@Transactional(readOnly = false)
+	public void updateUser(UserWrapper userDetails) {
+		UserEntity userEntity = userDao.fetchUserByUserId(userDetails.getId());
+		if(userEntity == null){
+			throw new UserException(ErrorMapping.USER_NOT_FOUND);
+		}
+		
+		userEntity = userDetails.unwrapForUpdate(userEntity);
+		userDao.updateUser(userEntity);
+	}
 
+	private String generateUUID(){
+		return UUID.randomUUID().toString();
+	}
 }

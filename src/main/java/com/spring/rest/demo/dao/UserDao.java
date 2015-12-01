@@ -11,4 +11,6 @@ public interface UserDao {
     void createUser(UserEntity userDetails);
 
     void updateUser(UserEntity userDetails);
+    
+    UserEntity fetchUserByUserId(String userId);
 }
