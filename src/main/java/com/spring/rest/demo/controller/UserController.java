@@ -41,13 +41,4 @@ public class UserController {
         UserValidator.validateUserDetails(userDetails);
         userService.updateUser(userDetails);
     }
-    
-    @RequestMapping(value = "/abc", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.OK)
-    public @ResponseBody UserWrapper getUser() {
-        UserWrapper userWrapper = new UserWrapper();
-        userWrapper.setAge(20);
-        userWrapper.setFirstName("ravi");
-        return userWrapper;
-    }
 }

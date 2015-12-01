@@ -1,68 +1,92 @@
 package com.spring.rest.demo.wrapper;
 
+import com.spring.rest.demo.model.UserEntity;
+
 public class UserWrapper {
-    
-    private String id;
-    private String firstName;
-    private String lastName;
-    private Integer age;
-    private String gender;
-    private String phone;
-    private String zip;
 
-    public String getId() {
-        return id;
-    }
+	private String id;
+	private String firstName;
+	private String lastName;
+	private Integer age;
+	private String gender;
+	private String phone;
+	private String zip;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public Integer getAge() {
-        return age;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+	public Integer getAge() {
+		return age;
+	}
 
-    public String getGender() {
-        return gender;
-    }
+	public void setAge(Integer age) {
+		this.age = age;
+	}
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+	public String getGender() {
+		return gender;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public String getZip() {
-        return zip;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public UserEntity unwrap() {
+		UserEntity userEntity = new UserEntity();
+		userEntity.setAge(this.age);
+		userEntity.setFirstName(this.firstName);
+		userEntity.setGender(this.gender);
+		userEntity.setId(this.id);
+		userEntity.setLastName(this.lastName);
+		userEntity.setPhone(this.phone);
+		userEntity.setZip(this.zip);
+		return userEntity;
+	}
+
+	public void wrap(UserEntity userEntity) {
+		this.age = userEntity.getAge();
+		this.firstName = userEntity.getFirstName();
+		this.gender = userEntity.getGender();
+		this.id = userEntity.getId();
+		this.lastName = userEntity.getLastName();
+		this.phone = userEntity.getPhone();
+		this.zip = userEntity.getZip();
+	}
 }
