@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.spring.rest.demo.service.UserService;
 import com.spring.rest.demo.validator.UserValidator;
+import com.spring.rest.demo.wrapper.SuccessWrapper;
 import com.spring.rest.demo.wrapper.UserWrapper;
 
 @Controller
@@ -30,15 +31,17 @@ public class UserController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void createUser(@RequestBody UserWrapper userDetails) {
+    public @ResponseBody SuccessWrapper createUser(@RequestBody UserWrapper userDetails) {
         UserValidator.validateUserDetails(userDetails);
         userService.createUser(userDetails);
+        return new SuccessWrapper("User created successfully.");
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    public void updateUser(@RequestBody UserWrapper userDetails) {
+    public @ResponseBody SuccessWrapper updateUser(@RequestBody UserWrapper userDetails) {
         UserValidator.validateUserDetails(userDetails);
         userService.updateUser(userDetails);
+        return new SuccessWrapper("User updated successfully.");
     }
 }
