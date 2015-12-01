@@ -46,4 +46,12 @@ public class UserDaoImpl implements UserDao {
 		criteria.add(Restrictions.eq("id", userId));
 		return (UserEntity) criteria.uniqueResult();
 	}
+
+    public UserEntity fetchUserByName(String firstName, String lastName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(UserEntity.class);
+        criteria.add(Restrictions.eq("firstName", firstName));
+        criteria.add(Restrictions.eq("lastName", lastName));
+        return (UserEntity) criteria.uniqueResult();
+    }
 }

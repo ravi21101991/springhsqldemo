@@ -37,7 +37,12 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional(readOnly = false)
 	public void createUser(UserWrapper userWrapper) {
-		UserEntity userEntity = userWrapper.unwrap();
+	    UserEntity userEntity = userDao.fetchUserByName(userWrapper.getFirstName(), userWrapper.getLastName());
+		if(userEntity != null){
+		    throw new UserException(ErrorMapping.USER_ALREADY_EXISTS);
+		}
+	    
+	    userEntity = userWrapper.unwrap();
 		userEntity.setId(generateUUID());
 		userDao.createUser(userEntity);
 	}

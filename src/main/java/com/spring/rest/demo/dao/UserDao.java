@@ -13,4 +13,6 @@ public interface UserDao {
     void updateUser(UserEntity userDetails);
     
     UserEntity fetchUserByUserId(String userId);
+    
+    UserEntity fetchUserByName(String firstName, String lastName);
 }

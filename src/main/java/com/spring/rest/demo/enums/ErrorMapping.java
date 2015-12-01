@@ -14,7 +14,8 @@ public enum ErrorMapping {
 	INVALID_PHONE_NUMBER("INP400", "Invalid phone number."),
 	INVALID_PHONE_NUMBER_LENGTH("IPL400", "Phone number length must be 10."),
 	GENDER_MANDATORY("GEN400", "Gender is mandatory."),
-	INVALID_GENDER("GEV400", "Invalid gender only M or F allowed.");
+	INVALID_GENDER("GEV400", "Invalid gender only M or F allowed."),
+	USER_ALREADY_EXISTS("USR400", "User with given first and last name already exists.");
 	
 
 	private String errorCode;
